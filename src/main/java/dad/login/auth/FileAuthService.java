@@ -22,7 +22,6 @@ public class FileAuthService implements AuthService {
 	/**
 	 * Autenticación de un usuario mediante nombre de usuario y contraseña.
 	 */
-	@Override
 	public boolean login(String username, String password) throws Exception {
 
 		// cifra la contraseña especificada
