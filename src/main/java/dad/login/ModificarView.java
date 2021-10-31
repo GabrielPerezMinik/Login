@@ -11,52 +11,69 @@ import javafx.scene.layout.VBox;
 
 public class ModificarView extends VBox {
 
-	private TextField userText;
-	private PasswordField contraText;
-	
-	private Button aceptarButton;
-	private Button accederButton;
-	
-	private CheckBox ldap;
+	/* Controles utilizados en la vista */
+	Label labelusuario;
+	Label labelcontrasena;
+	static TextField userText;
+	static PasswordField contraText;
+	Button cancelarButton;
+	Button accederButton;
+	static CheckBox ldap;
+	HBox usuarioBox;
+	HBox contrasenaBox; 
+	HBox botonesBox;
 	
 	
 	public ModificarView() {
 		super();
-		
+
+		labelusuario = new Label("Usuario:");
+		labelusuario.setPrefWidth(100);
+
+		labelcontrasena = new Label("ContraseÃ±a:");
+		labelcontrasena.setPrefWidth(100);
+
 		userText = new TextField();
-		userText.setPromptText("Nombre de Usuario");
-		
+
 		contraText = new PasswordField();
-		contraText.setPromptText("Contraseña de usuario");
-		
-		aceptarButton = new Button("Cancelar");
+
+		cancelarButton = new Button("Cancelar");
 		accederButton = new Button("Acceder");
+		ldap = new CheckBox("Usar LDAP");
+
+		usuarioBox = new HBox(5, labelusuario, userText);
+		usuarioBox.setAlignment(Pos.CENTER);
 		
+		contrasenaBox = new HBox(5, labelcontrasena, contraText);
+		contrasenaBox.setAlignment(Pos.CENTER);
 		
-		HBox valorBox = new HBox(5, new Label("Nuevo valor:"),userText);
-		HBox botonesBox = new HBox(5, accederButton);
-		
-		
-		setSpacing(5);
-		setFillWidth(false);
+		botonesBox = new HBox(5, accederButton, cancelarButton);
+		botonesBox.setAlignment(Pos.CENTER);
+
+		setSpacing(15);	
 		setAlignment(Pos.CENTER);
-		getChildren().addAll(valorBox, aceptarButton, botonesBox);
+		getChildren().addAll(usuarioBox, contrasenaBox,ldap, botonesBox);
+		
 	}
 
-
-	public TextField getValorText() {
+	public static TextField getuserText() {
 		return userText;
 	}
 
-
-	public Button getEstablecidoButton() {
-		return aceptarButton;
+	public static TextField getcontrasenaText() {
+		return contraText;
 	}
 
+	public Button getCancelarButton() {
+		return cancelarButton;
+	}
 
-	public Button getIncrementarButton() {
+	public Button getAccederButton() {
 		return accederButton;
 	}
-		
-	
+
+	public static CheckBox getldap() {
+		return ldap;
+	}
+
 }
