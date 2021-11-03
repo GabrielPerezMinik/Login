@@ -1,6 +1,7 @@
 package dad.login;
 
 import dad.login.auth.AuthService;
+import dad.login.auth.FileAuthService;
 import dad.login.auth.LdapAuthService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,7 +11,7 @@ public class Controlador {
 
 	private ModificarView vista = new ModificarView();
 	private ModificarModel modelo = new ModificarModel();
-	private AuthService auth;
+	private FileAuthService auth;
 	private LdapAuthService ldap;
 	private String user = ModificarView.getuserText().getText();
 	private String pass = ModificarView.getcontrasenaText().getText();
@@ -28,53 +29,32 @@ public class Controlador {
 				if (ModificarView.getldap() != null) {
 
 					try {
-						if (ldap.login(user, pass)) {
-							isValid = true;
+						ldap = new LdapAuthService();
+						isValid = ldap.login(user, pass);
+						if (isValid) {
+							AlertMensaje.mostrarAlert(AlertType.INFORMATION, "Acceso permitido",
+									"Las credenciales de acceso son válidas.");
 						} else {
-							isValid = false;
-
-							try {
-
-								if (isValid) {
-									AlertMensaje.mostrarAlert(AlertType.INFORMATION, "Acceso permitido",
-											"Las credenciales de acceso son válidas.");
-								} else {
-									AlertMensaje.mostrarAlert(AlertType.ERROR, "Acceso denegado",
-											"El usuario y/o contraseña no son válidos.");
-								}
-
-							} catch (Exception e) {
-								AlertMensaje.mostrarAlert(AlertType.ERROR, "Error", e.getMessage());
-							}
-
+							AlertMensaje.mostrarAlert(AlertType.ERROR, "Acceso denegado",
+									"El usuario y/o contraseña no son válidos.");
 						}
+
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 
 				}
-				
+
 				else {
 					try {
-						if (auth.login(user, pass)) {
-							isValid = true;
+						auth = new FileAuthService();
+						isValid = auth.login(user, pass);
+						if (isValid) {
+							AlertMensaje.mostrarAlert(AlertType.INFORMATION, "Acceso permitido",
+									"Las credenciales de acceso son válidas.");
 						} else {
-							isValid = false;
-
-							try {
-
-								if (isValid) {
-									AlertMensaje.mostrarAlert(AlertType.INFORMATION, "Acceso permitido",
-											"Las credenciales de acceso son válidas.");
-								} else {
-									AlertMensaje.mostrarAlert(AlertType.ERROR, "Acceso denegado",
-											"El usuario y/o contraseña no son válidos.");
-								}
-
-							} catch (Exception e) {
-								AlertMensaje.mostrarAlert(AlertType.ERROR, "Error", e.getMessage());
-							}
-
+							AlertMensaje.mostrarAlert(AlertType.ERROR, "Acceso denegado",
+									"El usuario y/o contraseña no son válidos.");
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
